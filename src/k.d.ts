@@ -3,6 +3,7 @@ declare namespace k {
         value: T
     }
 
+    type Throwable = never;
     type It<T, C> = T[] | C;
 
     export function is<T = unknown>(obj1: T, obj2: T): boolean
@@ -11,7 +12,7 @@ declare namespace k {
     export class Iterator<E> extends Valuable<E[]> {
         constructor(array?: It<E, Iterable<E>>)
         hasNext(): boolean
-        next(): E | never
+        next(): E | Throwable
         remove(): void
     }
 
@@ -24,7 +25,7 @@ declare namespace k {
         constructor(array?: It<T, List<T>>)
         get length(): number
         add(item: T | T[]): void
-        remove(index: number): void
+        remove(index: number): void | Throwable
         clear(): void
         has(item: T): boolean
         forEach(
@@ -38,7 +39,7 @@ declare namespace k {
 
     export class Queue<T = any> extends List<T> {
         enqueue(element: T | T[]): void
-        dequeue(): T
+        dequeue(): T | Throwable
         front(): T
         size(): number
         toString(): string

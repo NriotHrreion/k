@@ -7,6 +7,8 @@ export class Stack<T = any> extends List<T> {
     }
 
     public pop(): T {
+        if(this.isEmpty()) throw new Error("Stack: No element in the stack to pop.");
+
         var lastItem = this.peek();
         this.remove(this.length - 1);
         return lastItem;

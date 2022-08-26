@@ -22,6 +22,10 @@ export class Iterator<E> {
     }
 
     public remove(): void {
+        if(this.current < 0 || this.current >= this.value.length) {
+            throw new Error("List: Cannot find the specified element in the list.");
+        }
+
         var j = this.current;
         while(j < this.value.length) {
             this.value[j] = this.value[j + 1];

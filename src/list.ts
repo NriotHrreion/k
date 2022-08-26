@@ -28,6 +28,8 @@ export class List<T = any> extends Iterable<T> {
     }
 
     public remove(index: number): void {
+        if(index >= this.length) throw new Error("List: Cannot find the specified item in the list.");
+
         var j = index;
         while(j < this.value.length) {
             this.value[j] = this.value[j + 1];
