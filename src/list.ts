@@ -1,7 +1,7 @@
 import { is, arrayIs } from "./is";
 import { Iterable } from "./iterator";
 
-export class List<T = unknown> extends Iterable<T> {
+export class List<T = any> extends Iterable<T> {
     public constructor(array: T[] | List<T> = []) {
         var value: T[];
         if(array instanceof Array) {
@@ -57,7 +57,7 @@ export class List<T = unknown> extends Iterable<T> {
         }
     }
 
-    public index(item: T) {
+    public index(item: T): number {
         for(let i = 0; i < this.length; i++) {
             if(is(this.value[i], item)) return i;
         }

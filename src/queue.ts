@@ -1,6 +1,6 @@
 import { List } from "./list";
 
-export class Queue<T = unknown> extends List<T> {
+export class Queue<T = any> extends List<T> {
     public enqueue(element: T | T[]): void {
         this.add(element);
     }

@@ -2,12 +2,15 @@ const path = require("path");
 
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+const buildPath = "dist";
 
 module.exports = {
     entry: "./src/index.ts",
     output: {
         filename: "k.js",
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, buildPath),
         libraryTarget: "umd",
         globalObject: "this"
     },
@@ -30,7 +33,19 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.join(__dirname, "src/k.d.ts"),
+                    to: path.join(__dirname, buildPath, "k.d.ts")
+                },
+                {
+                    from: path.join(__dirname, "package-dist.json"),
+                    to: path.join(__dirname, buildPath, "package.json")
+                }
+            ]
+        })
     ],
     optimization: {
         minimize: true,

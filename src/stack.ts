@@ -1,6 +1,6 @@
 import { List } from "./list";
 
-export class Stack<T = unknown> extends List<T> {
+export class Stack<T = any> extends List<T> {
     public push(item: T | T[]): T | T[] {
         this.add(item);
         return item;
