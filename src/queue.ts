@@ -1,4 +1,5 @@
 import { List } from "./list";
+import ListError from "./error/ListError";
 
 export class Queue<T = any> extends List<T> {
     public enqueue(element: T | T[]): void {
@@ -6,7 +7,7 @@ export class Queue<T = any> extends List<T> {
     }
 
     public dequeue(): T {
-        if(this.isEmpty()) throw new Error("Queue: No element in the list to dequeue.");
+        if(this.isEmpty()) throw new ListError("No element in the list to dequeue.");
 
         const firstElem = this.front();
         this.remove(0);

@@ -1,3 +1,4 @@
+import ListError from "./error/ListError";
 import { is, arrayIs } from "./is";
 import { Iterable } from "./iterator";
 
@@ -27,8 +28,14 @@ export class List<T = any> extends Iterable<T> {
         }
     }
 
+    public get(index: number): T {
+        if(index < 0 || index >= this.length) throw new ListError("Cannot find the specified item in the list.");
+
+        return this.value[index];
+    }
+
     public remove(index: number): void {
-        if(index >= this.length) throw new Error("List: Cannot find the specified item in the list.");
+        if(index < 0 || index >= this.length) throw new ListError("Cannot find the specified item in the list.");
 
         var j = index;
         while(j < this.value.length) {

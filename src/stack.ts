@@ -1,4 +1,5 @@
 import { List } from "./list";
+import ListError from "./error/ListError";
 
 export class Stack<T = any> extends List<T> {
     public push(item: T | T[]): T | T[] {
@@ -7,7 +8,7 @@ export class Stack<T = any> extends List<T> {
     }
 
     public pop(): T {
-        if(this.isEmpty()) throw new Error("Stack: No element in the stack to pop.");
+        if(this.isEmpty()) throw new ListError("No element in the stack to pop.");
 
         var lastItem = this.peek();
         this.remove(this.length - 1);

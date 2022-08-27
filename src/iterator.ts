@@ -1,8 +1,12 @@
+import IteratorError from "./error/IteratorError";
+
+type IteratorConstructor<E> = E[] | Iterable<E>;
+
 export class Iterator<E> {
     public value: E[];
     private current: number = -1;
 
-    public constructor(array: E[] | Iterable<E> = []) {
+    private constructor(array: IteratorConstructor<E>) {
         if(array instanceof Array) {
             this.value = array;
         } else {
@@ -15,7 +19,7 @@ export class Iterator<E> {
     }
 
     public next(): E | never {
-        if(!this.hasNext()) throw new Error("Iterator: No such element in the list.");
+        if(!this.hasNext()) throw new IteratorError("No such element in the list.");
 
         this.current++;
         return this.value[this.current];
@@ -23,7 +27,7 @@ export class Iterator<E> {
 
     public remove(): void {
         if(this.current < 0 || this.current >= this.value.length) {
-            throw new Error("List: Cannot find the specified element in the list.");
+            throw new IteratorError("Cannot find the specified element in the list.");
         }
 
         var j = this.current;
@@ -32,6 +36,10 @@ export class Iterator<E> {
             j++;
         }
         this.value.pop();
+    }
+
+    public static createIterator<T>(array: IteratorConstructor<T>): Iterator<T> {
+        return new Iterator(array);
     }
 }
 
@@ -43,6 +51,6 @@ export class Iterable<T = unknown> {
     }
 
     public iterator(): Iterator<T> {
-        return new Iterator(this);
+        return Iterator.createIterator<T>(this);
     }
 }
